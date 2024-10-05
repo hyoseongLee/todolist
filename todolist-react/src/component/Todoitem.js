@@ -4,7 +4,10 @@ import './Todoitem.css';
 
 const Todoitem = ({ 
   todo, 
-  onCheckToggle 
+  onCheckToggle,
+  oninserToggle,
+  onChangeSelectedTodo
+  
 }) => {
     const { text, id, checked } = todo;
     return <div className="Todoitem">
@@ -23,7 +26,14 @@ const Todoitem = ({
            />
         )}
         <div
-         className="text">{text}</div>
+         className="text"
+          onClick={() => {
+            onChangeSelectedTodo(todo)
+            oninserToggle();
+          }}
+          >
+          {text}
+          </div>
       </div>
   </div>;
 };

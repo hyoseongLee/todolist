@@ -8,6 +8,7 @@ import Todoinser from './component/Todoinser';
 let nextId = 4;
 
 const App = () => {
+  const [selectedTodo, setSelectedTodo] = useState(null);
   const [inserToggle,setinserToggle] = useState(false);
   const [todos, setTodos] = useState([
     {
@@ -29,6 +30,9 @@ const App = () => {
   ])
 
   const oninserToggle = () => {
+    if (selectedTodo) {
+      setSelectedTodo(null);
+    }
     setinserToggle(prev => !prev);
   };
 
@@ -54,20 +58,41 @@ const App = () => {
    );
   };
 
+  const onChangeSelectedTodo = (todo) => {
+    setSelectedTodo(todo)
+  } 
+
+  const onRemove = id => {
+    oninserToggle();
+    setTodos(todos => todos.filter(todo =>todo.id !== id));
+  };
+
+  const onUpdate = (id, text) => {  
+    oninserToggle();
+    setTodos(todos =>
+      todos.map(todo => (todo.id === id ? {...todo, text} : todo))
+    );
+  }
 
   return (
     <Todo todoLength = {todos.length}>
       <Todolist 
       todos={todos} 
       onCheckToggle={onCheckToggle}
+      oninserToggle={oninserToggle}
+      onChangeSelectedTodo={onChangeSelectedTodo}
       />
+
       <div className="add-todo-button" onClick={oninserToggle}>
         <MdAddCircle />
       </div>
       {inserToggle && (
       <Todoinser 
+      selectedTodo={selectedTodo}
       oninserToggle={oninserToggle} 
       oninserTodo={oninserTodo} 
+      onRemove={onRemove}
+      onUpdate={onUpdate}
       />
     )}
     </Todo>

@@ -4,7 +4,9 @@ import './Todolist.css';
 
 const Todolist = ({ 
     todos, 
-    onCheckToggle 
+    onCheckToggle,
+    oninserToggle,
+    onChangeSelectedTodo
 }) => {
     
     return (
@@ -14,6 +16,8 @@ const Todolist = ({
             todo={todo} 
             key={todo.id} 
             onCheckToggle={onCheckToggle}
+            oninserToggle={oninserToggle}
+            onChangeSelectedTodo={onChangeSelectedTodo}
             />
         ))}
         </div>
